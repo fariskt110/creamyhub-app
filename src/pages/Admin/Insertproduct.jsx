@@ -12,7 +12,7 @@ export default function Insertproduct() {
     const { name, value } = e.target;
     setAdmin({ ...admin, [name]: value });
   };
-
+// console.log();
   const productadd = (e) => {
 
 
