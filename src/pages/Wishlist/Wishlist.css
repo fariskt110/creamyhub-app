@@ -1,0 +1,31 @@
+/* Product card section */
+.prooduct-section {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px;
+}
+
+.prooduct-card {
+    width: 250px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.prooduct-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.prooduct-card-content {
+    padding: 20px;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .prooduct-card {
+        width: 100%;
+    }
+}

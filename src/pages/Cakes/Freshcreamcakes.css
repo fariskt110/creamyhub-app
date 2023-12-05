@@ -1,0 +1,25 @@
+.produuct-secction{
+    display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px;
+}
+.produuct-carddd{
+    width: 250px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
+}
+.prooimg{
+    max-width: 100%;
+    height: auto;
+}
+.prodduct-card-conttent{
+    padding: 20px;   
+}
+@media(max-width:768px){
+    .produuct-carddd{
+        width:100;
+    }
+}

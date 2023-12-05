@@ -1,0 +1,66 @@
+#curtain-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    z-index: 2;
+    overflow: hidden;
+}
+
+#curtain {
+    width: 100%;
+    height: 100%;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSumsY7JmL2kP-CY2WV01dCUdkMWn1a3NfW8EGrbSOm4g&s') no-repeat center center;
+    background-size: cover;
+    transition: transform 1s ease-in-out;
+}
+
+#truck {
+    width: 200px; /* Adjust the width of the truck */
+    height: 100px; /* Adjust the height of the truck */
+    background: url('https://img.freepik.com/free-photo/green-truck-with-white-trailer-road_1340-32388.jpg') no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: left 2s ease-in-out;
+    z-index: 3;
+}
+
+#success-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 10px;
+    position: relative;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+@media (max-width: 600px) {
+    #success-message {
+        font-size: 14px;
+    }
+}
+
+/* Add more media queries for other screen sizes if needed */
+
+.curtain-open #curtain {
+    transform: translateY(-100%);
+}
+
+.truck-move #truck {
+    left: 100%;
+}
+
+.message-show .curtain-open #success-message {
+    opacity: 1;
+}

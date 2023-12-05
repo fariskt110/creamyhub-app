@@ -1,0 +1,152 @@
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.heed {
+    margin: 0;
+}
+
+.maain {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.caart-containeer {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 0 10px 20px 0;
+    box-sizing: border-box;
+}
+
+.tablle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabblee, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.couppen {
+    padding: 5px;
+    width: 70%;
+}
+
+.apply {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.totals1 {
+    text-align: right;
+}
+
+/* .cartt-actionss {
+    display: flex;
+    justify-content: space-between;
+} */
+
+.continuee-shoppingg
+ {
+  padding: 10px 20px; /* Adjust padding to control the size of the buttons */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none; /* Add this line to remove default link styles */
+  text-align: center;
+}
+.placee-orderr{
+    padding: 10px 20px; /* Adjust padding to control the size of the buttons */
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none; /* Add this line to remove default link styles */
+    text-align: center;
+
+}
+
+.continuee-shoppingg {
+  margin-right: 10px; /* Add margin to separate buttons if needed */
+}
+.productt-liist {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin: 0 0 20px 10px;
+    box-sizing: border-box;
+}
+
+.productt-liist table {
+    width: 100%;
+}
+
+.cartt-detailss {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 20px;
+}
+
+.delivery-details {
+    margin-bottom: 10px;
+}
+
+.deliveryy-detailss  {
+    display: block;
+    margin-bottom: 5px;
+}
+.labll{ display: block;
+    margin-bottom: 5px;
+}
+
+.deliveryy-detailss  {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.inputtt{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Add your responsive styles as needed */
+
+@media screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    .cartt-containerr, .productt-liist {
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
+}

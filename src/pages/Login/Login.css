@@ -1,0 +1,71 @@
+.Toastify__toast-container {
+  z-index: 9999;
+}
+
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+  }
+  
+  .login-form {
+    width: 90%;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
+  
+  .login-form h2 {
+    margin: 0 0 20px;
+  }
+  
+  label {
+    display: block;
+    text-align: left;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .forget-password {
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #0066cc;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0066cc;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #0055b5;
+  }
+  
+  @media (max-width: 768px) {
+    .login-form {
+      width: 100%;
+    }
+  }
+  

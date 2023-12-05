@@ -1,0 +1,34 @@
+/* before adding the img to the div with the 
+"card-img" class, remove css styles 
+.card-img .img::before and .card-img .img::after,
+then set the desired styles for .card-img. */
+.productt-sectionn {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px;
+}
+
+.productt-cardd {
+  width: 250px;
+  background-color: #fff;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.proimg {
+  max-width: 100%;
+  height: auto;
+}
+
+.productt-cardd-contentt {
+  padding: 20px;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+  .productt-cardd {
+      width: 100%;
+  }
+}

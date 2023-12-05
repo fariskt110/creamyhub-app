@@ -1,0 +1,54 @@
+.full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-code-section {
+  margin-bottom: 20px;
+}
+.qr-code-section img{
+  width:250px;
+  height: 250px;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recommended-heading {
+  font-weight: bold;
+}
+
+.payment-option {
+  background-color: black;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.payment-option:hover {
+  background-color: #2980b9;
+}
+
+.payment-option img {
+  width: 50px;
+  margin-bottom: 5px;
+}
+
+.price-details {
+  text-align: center;
+}
+
+.total-box {
+  background-color: black;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+}

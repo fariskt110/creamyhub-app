@@ -1,0 +1,189 @@
+/* Carousel Styles */
+/* Add this CSS for the automatic carousel */
+/* Carousel Styles */
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%; /* Make it full-width */
+    max-width: 100%; /* Limit maximum width */
+    height: auto;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    transition: transform 1s ease;
+}
+
+/* Image Styles */
+.carousel img {
+    
+        width: 100%;
+        height: 350px; /* Set a fixed height for all images */
+        object-fit: cover; /* Maintain the aspect ratio and cover the container */
+        display: block;
+
+}
+
+/* Define keyframes for the automatic sliding */
+@keyframes slide {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    75% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Apply the animation to the carousel-slide */
+.carousel-slide {
+    animation: slide 5s linear infinite;
+}
+
+
+/* Section Heading Styles */
+.section-heading {
+    text-align: center;
+    font-size: 24px;
+    color: #333; /* Example text color */
+    margin: 20px 0;
+}
+
+/* Underline Styles */
+.underline {
+    width: 100px;
+    height: 3px;
+    background-color: #FF5733; /* Example color */
+    margin: 0 auto;
+}
+
+/* Subheading Styles */
+.subheading {
+    text-align: center;
+    font-size: 18px;
+    color: #333; /* Example text color */
+    margin: 10px 0;
+}
+
+/* Categories Navbar Styles */
+/* Navbar Styles */
+/* Navbar Styles */
+.categories-navbar {
+    background-color: #FF5733;
+    text-align: center;
+    padding: 10px;
+}
+
+.categories-navbar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categories-navbar li {
+    display: inline;
+    margin: 0 10px;
+    transition: border-radius 0.3s;
+    position: relative;
+}
+
+.categories-navbar li:hover {
+    border-radius: 10px; /* Add border radius on hover */
+}
+
+.categories-navbar a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.categories-navbar li::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transition: width 0.3s;
+}
+
+.categories-navbar li:hover::before {
+    width: 100%;
+}
+
+
+/* Product card section */
+.producct-section {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px;
+}
+
+.producct-card {
+    width: 250px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.picture {
+    max-width: 100%;
+    height: 150px; /* Set a fixed height for the image */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.producct-card-content {
+    padding: 20px;
+}
+
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .producct-card {
+        width: 100%;
+    }
+}
+
+
+.addd-to-cart,
+.addd-to-wishlist {
+    padding: 5px 10px;
+    background-color: #FF5733; /* Example background color */
+    color: #fff; /* Example text color */
+    border: none;
+    cursor: pointer;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    /* Adjust styles for smaller screens here */
+    .section-heading {
+        font-size: 20px;
+    }
+
+    .underline {
+        width: 60px;
+    }
+
+    .subheading {
+        font-size: 16px;
+    }
+    
+    .categories-navbar {
+        padding: 5px;
+    }
+
+    .categories-navbar li {
+        margin: 0 5px;
+    }
+    
+    .cake-card {
+        max-width: 100%;
+    }
+}

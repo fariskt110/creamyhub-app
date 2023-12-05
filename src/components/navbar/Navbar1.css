@@ -1,0 +1,69 @@
+.navbar1 {
+    background-color: white;
+  }
+  
+  .navbar1 a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .navbar1 a:hover {
+    text-decoration: underline;
+  }
+  
+  .logo, .search-bar, .wishlist, .my-account, .shopping-cart {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+  }
+  
+  .search-bar input[type="text"] {
+    padding: 5px;
+  }
+  
+  .search-bar button {
+    padding: 5px 10px;
+    background-color: #ccc;
+    border: none;
+    color: white;
+  }
+  
+  .wishlist, .my-account {
+    position: relative;
+  }
+  
+  .wishlist-icon, .my-account-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 50%;
+  }
+  
+  .wishlist-text, .my-account-text {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  
+  .cart-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 50%;
+  }
+  
+  .cart-box {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 5px;
+  }
+  
+  .item-count, .cart-amount {
+    display: block;
+    text-align: center;
+  }
+  .logo img{
+    width:100px;
+    height:auto;
+  }

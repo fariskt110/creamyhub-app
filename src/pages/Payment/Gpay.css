@@ -1,0 +1,77 @@
+.centercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the container take the full height of the viewport */
+  }
+
+
+
+
+
+
+.Gpayy {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    margin: auto; /* Center the box horizontally */
+    text-align: center; /* Center the content within the box */
+    margin-top: 50px;
+    margin-bottom: 20px;
+    
+
+
+}
+
+.hee {
+    text-align: center;
+    color: #333;
+}
+
+.gpay {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+}
+
+.up {
+    margin-bottom: 8px;
+}
+
+.inn,
+.sel,
+.now {
+    width: 100%; /* Make inputs and button full-width */
+    max-width: 200px; /* Set a maximum width if needed */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.now {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.now:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+    .contaiiner {
+        margin: 20px;
+    }
+
+    .inn,
+    .sel,
+    .now {
+        max-width: none; /* Remove max-width for full-width on small screens */
+    }
+}

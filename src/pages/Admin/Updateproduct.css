@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Set a background color for the page */
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%; /* Adjust the width as needed */
+    max-width: 400px; /* Set a maximum width for larger screens */
+}
+
+.card-border-top {
+    border-top: 2px solid #3498db; /* Use a color for the border */
+    margin-bottom: 15px;
+}
+
+.image {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+    border-radius: 8px; /* Add border radius for rounded corners */
+}
+
+.product {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.submitt {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.submitt:hover {
+    background-color: #2980b9; /* Change color on hover */
+}

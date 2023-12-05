@@ -1,0 +1,84 @@
+.mainn {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    margin: auto; /* Center the box horizontally */
+    text-align: center; /* Center the content within the box */
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.cash {
+    margin-bottom: 20px;
+}
+
+.codd {
+    display: flex;
+    flex-direction: column;
+}
+
+.extra-charge {
+    margin-bottom: 10px;
+    color: red;
+}
+
+.captcha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.photo {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.captcha label {
+    margin-bottom: 5px;
+}
+
+.typpe,
+.bu {
+ padding: 10px;
+  background-color:white;
+  color:black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  margin-left: 65px;
+}
+
+.bu {
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px;;
+}
+
+.bu:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .mainn {
+        width: 90%;
+    }
+
+    .typpe,
+    .bu {
+        padding: 6px;
+    }
+}
