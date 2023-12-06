@@ -133,7 +133,7 @@ console.log(searchResult);
         {searchResult?.map((data)=>(
            <section className="productt-sectionn">
          <div className="productt-cardd">
-         <img className="proimg"  src={`/creamyhub/static/${data.image}`} alt="Cake 1" />
+         <img className="proimg"  src={`/creamyhub/model/${data.image}`} alt="Cake 1" />
          <div className="productt-cardd-contentt">
         <h3>{data.cakename}</h3>
         <p>{data.cakeprice}</p>

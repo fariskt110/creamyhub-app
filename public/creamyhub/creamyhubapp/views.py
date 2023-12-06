@@ -1,4 +1,5 @@
 from django.db.models import Sum
+from django.conf import settings
 from django.shortcuts import render
 from.serializers import Loginserializer,Registrationserializer,caketableserializer,Bookingserializer,Reviewserializer,Wishlistserializer,cartserializer,order_serializer
 from.models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order
@@ -8,6 +9,7 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from .qr import Generateqr
 import random
+
 
 global otp,emailid
 
@@ -191,9 +193,12 @@ class cakeSearchAPIView(GenericAPIView):
         
         i = caketable.objects.filter(cakecategory__icontains=query)
         for dta in i:
+            dta['image']= settings.MEDIA_URL+str(obj['image'])
+
             print(dta)
+
         
-        data= [{'cakename':info.cakename, 'cakeprice':info.cakeprice,'cakecategory': info.cakecategory,'brand':info.brand } for info in i]
+        data= [{'cakename':info.cakename, 'cakeprice':info.cakeprice,'cakecategory': info.cakecategory,'brand':info.brand,'image':info.image } for info in i]
         return Response({'data': data, 'message':'sucessfully fetched','sucess': True}, status=status.HTTP_200_OK)
 #delete view
 class Delete_cakeAPIView(GenericAPIView):
