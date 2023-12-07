@@ -16,10 +16,10 @@ export default function Home() {
   // console.log(cakelist);
   const user = localStorage.getItem("user_id");
   console.log(user);
-
-
  const status = useSelector((state)=> state.product.status)
  const cakelist=useSelector((state)=> state.product.productsdata);
+ 
+
 
  const dispatch=useDispatch()
 

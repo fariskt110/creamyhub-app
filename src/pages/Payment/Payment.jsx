@@ -19,10 +19,12 @@ export default function Payment(){
 
     useEffect(()=>{
    axios.get(`http://127.0.0.1:8000/api/VieworderAPIView/${user}`).then((response=>{
+     setCart(response.data.data);
      console.log(response.data.data);
-    setCart(response.data.data)
    }));
 },[]);
+console.log(cart);
+
 useEffect(()=>{
   axios.get(`http://127.0.0.1:8000/api/Get_Single_user/${user}`).then((response=>{
   setUser(response.data.data);
@@ -63,14 +65,14 @@ console.log(cart);
           </tr>
         </thead>
         
-        {cart.map((data)=>(
-  <tbody>
+        {cart?.map((data)=>(
+  <tbody  >
     <tr>
       <td>{data.cakeid}</td>
       <td>{data.cakename}</td>
       
       
-      <td>{`/creamyhub/static/${data.image}`}</td>
+      <td>{`creamyhub${data.image}`}</td>
     </tr>
     {/* <!-- Add more rows for other products if needed --> */}
   </tbody>

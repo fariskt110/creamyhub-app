@@ -12,6 +12,7 @@ export default function Cart() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
+  const [Total, setTotal] = useState("");
 
   const qnty = user.quantity;
   console.log(qnty);
@@ -34,11 +35,24 @@ export default function Cart() {
       .get(`http://127.0.0.1:8000/api/ViewcarteviewAPIView/${userid}`)
       .then((response) => {
         console.log(response);
-        setCart(response.data.data);
+        if ((response.data.data === "non data available")) {
+          setCart([]);
+        }else{
+          setCart(response.data.data);
+        }
       });
   }, []);
+  console.log(cart);
+  let total=0;
+  useEffect(() => {
+    total = cart?.reduce((acc, item) => {
+      const subtotal = item.quantity * item.cakeprice;
+      setTotal(acc + subtotal);
+    }, 0);
+  }, [cart]);
+  
 
-  console.log(quantity);
+  console.log(Total);
   const clearall = (cakeid) => {
     axios
       .delete(`http://127.0.0.1:8000/api/Delete_cartviewAPIView/${cakeid}`)
@@ -60,12 +74,11 @@ export default function Cart() {
     };
     axios.put(`http://127.0.0.1:8000/api/Update_cartviewAPIView/${id}`, data);
   };
-  const total = cart.reduce((acc, item) => {
-    const subtotal = item.quantity * item.cakeprice;
-    return acc + subtotal;
-  }, 0);
-  const courierCharge = total >= 599 ? 0 : 40;
-  const netamount = total + courierCharge;
+
+  const courierCharge = {Total} >= 599 ? 0 : 40;
+  console.log(courierCharge);
+  const netamount = Total + courierCharge;
+  console.log(netamount);
   const gstPercentage = 8;
 
   const gstAmount = (netamount * gstPercentage) / 100;
@@ -78,32 +91,30 @@ export default function Cart() {
   console.log(user.Name);
 
   const orderadd = () => {
-    
     const order = {
       user: userid,
       grandtotal: grandtotal,
-      name:user.Name,
-      phoneno:user.Phoneno,
+      name: user.Name,
+      phoneno: user.Phoneno,
       use: user.adress,
-      Location:user.location,
-      Pincode:user.pincode
-      
+      Location: user.location,
+      Pincode: user.pincode,
     };
 
     axios
       .post("http://127.0.0.1:8000/api/place", order)
       .then((response) => {
         console.log(response);
-         Navigate("/payment");
+        Navigate("/payment");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-console.log(cart);
+  console.log(cart);
   return (
     <>
-      {cart.length !== 0 ? ( 
+      {cart?.length !== 0 ? (
         <>
           <header>
             <h1 className="heed">Shopping Cart</h1>
@@ -123,7 +134,7 @@ console.log(cart);
                     <th>Subtotal</th>
                   </tr>
                 </thead>
-                
+
                 {cart?.map((data) => {
                   const subtotal = data.quantity * data.cakeprice;
 
@@ -140,7 +151,7 @@ console.log(cart);
                         <input
                           type="number"
                           name="quantity"
-                          Value={data.quantity}
+                          value={data.quantity}
                           min={1}
                           onChange={editcart}
                           onClick={() => {
@@ -174,7 +185,7 @@ console.log(cart);
                 </div>
                 <div className="totals1">
                   <div>
-                    <b>Total </b>:<FaRupeeSign /> {total}
+                    <b>Total </b>:<FaRupeeSign /> {Total}
                   </div>
                   <div>
                     <b>Courier Charge</b>:<FaRupeeSign /> {courierCharge}
@@ -192,7 +203,6 @@ console.log(cart);
                   Continue Shopping
                 </button>
                 <Link to={`/payment/${grandtotal}`}>
-                  
                   <button onClick={orderadd} className="placee-orderr">
                     Place Order
                   </button>
