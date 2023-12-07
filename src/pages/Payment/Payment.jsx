@@ -19,8 +19,8 @@ export default function Payment(){
 
     useEffect(()=>{
    axios.get(`http://127.0.0.1:8000/api/VieworderAPIView/${user}`).then((response=>{
+     console.log(response.data.data);
     setCart(response.data.data)
-    console.log(response.data.data);
    }));
 },[]);
 useEffect(()=>{
@@ -62,6 +62,7 @@ console.log(cart);
             
           </tr>
         </thead>
+        
         {cart.map((data)=>(
   <tbody>
     <tr>

@@ -137,7 +137,7 @@ export default function Home() {
       {cakelist.map((data) => (
         <section className="producct-section">
           <div className="producct-card">
-          <Link to={`/singleview/${data.id}`}> <img className="picture" src={`/creamyhub/static/${data.image}`} onError={handleImageError} /></Link>
+          <Link to={`/singleview/${data.id}`}> <img className="picture" src={`creamyhub${data.image}`} onError={handleImageError} /></Link>
             <div className="producct-card-content">
               <h3>{data.cakename}</h3>
               <p>{data.cakeprice}</p>

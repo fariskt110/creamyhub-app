@@ -1,5 +1,4 @@
 from django.db.models import Sum
-from django.conf import settings
 from django.shortcuts import render
 from.serializers import Loginserializer,Registrationserializer,caketableserializer,Bookingserializer,Reviewserializer,Wishlistserializer,cartserializer,order_serializer
 from.models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order
@@ -9,7 +8,6 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from .qr import Generateqr
 import random
-
 
 global otp,emailid
 
@@ -191,14 +189,16 @@ class cakeSearchAPIView(GenericAPIView):
         query = request.data.get('query')
         print(query)
         
-        i = caketable.objects.filter(cakecategory__icontains=query)
-        for dta in i:
-            dta['image']= settings.MEDIA_URL+str(obj['image'])
+        i = caketable.objects.filter(cakecategory__icontains=query) | caketable.objects.filter(cakename__icontains=query)
+        print(i)
+        
+        # for dta in i:
 
-            print(dta)
+        #     print(dta['image'])
+
 
         
-        data= [{'cakename':info.cakename, 'cakeprice':info.cakeprice,'cakecategory': info.cakecategory,'brand':info.brand,'image':info.image } for info in i]
+        data= [{'cakename':info.cakename, 'cakeprice':info.cakeprice,'cakecategory': info.cakecategory,'brand':info.brand } for info in i]
         return Response({'data': data, 'message':'sucessfully fetched','sucess': True}, status=status.HTTP_200_OK)
 #delete view
 class Delete_cakeAPIView(GenericAPIView):
@@ -507,6 +507,9 @@ class place(GenericAPIView):
         phoneno=request.data.get('phoneno')
         Location=request.data.get('Location')
         Pincode=request.data.get("Pincode")
+        carts=cart.objects.filter(userid=user_id,cartstatus=0)
+        if not carts.exists():
+            return Response({'message':'No order in cart','sucess':False }, status =status.HTTP_400_BAD_REQUEST)
 
         pstatus= '0'
         serializer=self.serializer_class(data={'user':user, 'totel':grandtotal,'adress':use,'pstatus':pstatus,'Name':name,'Phoneno':phoneno,'location':Location,'pincode':Pincode})

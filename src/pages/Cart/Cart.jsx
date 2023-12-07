@@ -8,10 +8,10 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState(3);
-  const [use, setUse] = useState([]);
+  //  const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   const qnty = user.quantity;
   console.log(qnty);
@@ -100,10 +100,10 @@ export default function Cart() {
         console.log(error);
       });
   };
-
+console.log(cart);
   return (
     <>
-      {cart.length !== 0 ? (
+      {cart.length !== 0 ? ( 
         <>
           <header>
             <h1 className="heed">Shopping Cart</h1>
@@ -123,7 +123,8 @@ export default function Cart() {
                     <th>Subtotal</th>
                   </tr>
                 </thead>
-                {cart.map((data) => {
+                
+                {cart?.map((data) => {
                   const subtotal = data.quantity * data.cakeprice;
 
                   return (
