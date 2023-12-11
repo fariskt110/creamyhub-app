@@ -8,11 +8,11 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState(3);
-  //  const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
-  const [Total, setTotal] = useState("");
+  // const [user, setUser] = useState({});
+  // const [Total, setTotal] = useState("");
 
   const qnty = user.quantity;
   console.log(qnty);
@@ -43,16 +43,16 @@ export default function Cart() {
       });
   }, []);
   console.log(cart);
-  let total=0;
-  useEffect(() => {
-    total = cart?.reduce((acc, item) => {
-      const subtotal = item.quantity * item.cakeprice;
-      setTotal(acc + subtotal);
-    }, 0);
-  }, [cart]);
+  // let total=0;
+  // useEffect(() => {
+  //   total = cart?.reduce((acc, item) => {
+  //     const subtotal = item.quantity * item.cakeprice;
+  //     setTotal(acc + subtotal);
+  //   }, 0);
+  // }, [cart]);
   
 
-  console.log(Total);
+  // console.log(Total);
   const clearall = (cakeid) => {
     axios
       .delete(`http://127.0.0.1:8000/api/Delete_cartviewAPIView/${cakeid}`)
@@ -69,20 +69,27 @@ export default function Cart() {
     setUser({ ...user, [name]: value });
   };
   const updateCart = (id) => {
-    const data = {
-      quantity: user.quantity,
-    };
-    axios.put(`http://127.0.0.1:8000/api/Update_cartviewAPIView/${id}`, data);
+    const updatedItem = cart.find((item) => item.id === id);
+  
+    if (updatedItem) {
+      axios.put(`http://127.0.0.1:8000/api/Update_cartviewAPIView/${id}`, {
+        quantity: updatedItem.quantity,
+      });
+    }
   };
+  
 
-  const courierCharge = {Total} >= 599 ? 0 : 40;
-  console.log(courierCharge);
-  const netamount = Total + courierCharge;
-  console.log(netamount);
+  const total = cart?.reduce((acc, item) => {
+    const subtotal = item.quantity * item.cakeprice;
+    return acc + subtotal;
+  }, 0);
+  const courierCharge = total >= 599 ? 0 : 40;
+  const netamount = total + courierCharge;
   const gstPercentage = 8;
 
   const gstAmount = (netamount * gstPercentage) / 100;
   const grandtotal = netamount + gstAmount;
+  
   // localStorage.setItem('grandtotal',JSON.stringify(grandtotal))
   // const net=localStorage.getItem("grandtotal");
   // console.log(net);
@@ -91,6 +98,7 @@ export default function Cart() {
   console.log(user.Name);
 
   const orderadd = () => {
+    
     const order = {
       user: userid,
       grandtotal: grandtotal,
@@ -99,10 +107,14 @@ export default function Cart() {
       use: user.adress,
       Location: user.location,
       Pincode: user.pincode,
+      
+      
+       cakeid: cart.length > 0 ? cart[0].cakeid : null
+    
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/place", order)
+      .post("http://127.0.0.1:8000/api/place_orderAPIView", order)
       .then((response) => {
         console.log(response);
         Navigate("/payment");
@@ -125,8 +137,8 @@ export default function Cart() {
                 <thead>
                   <tr>
                     <th>CakeID</th>
-                    <th>cake Name</th>
-                    <th>Cake Category</th>
+                    <th>cakeName</th>
+                    <th>CakeCategory</th>
                     <th>brand</th>
                     <th>image</th>
                     <th>PRICE</th>
@@ -145,18 +157,21 @@ export default function Cart() {
                         <td>{data.cakename}</td>
                         <td>{data.cakecategory}</td>
                         <td>{data.brand}</td>
-                        <td>{`/creamyhub/static/${data.image}`}</td>
+                        <td><img height={50} width={50} src={`creamyhub/media/${data.image}`}></img></td>
                         <td>{data.cakeprice}</td>
-                        {/* {setQuantity(data.quantity)} */}
+                       
                         <input
                           type="number"
                           name="quantity"
-                          value={data.quantity}
+                          Value={data.quantity}
                           min={1}
-                          onChange={editcart}
-                          onClick={() => {
-                            updateCart(data.id);
-                          }}
+                          onChange={(e) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === data.id ? { ...item, quantity: parseInt(e.target.value, 10) } : item
+      )
+    );
+  }}
                         />
 
                         <td>{subtotal}</td>
@@ -185,7 +200,7 @@ export default function Cart() {
                 </div>
                 <div className="totals1">
                   <div>
-                    <b>Total </b>:<FaRupeeSign /> {Total}
+                    <b>Total </b>:<FaRupeeSign /> {total}
                   </div>
                   <div>
                     <b>Courier Charge</b>:<FaRupeeSign /> {courierCharge}

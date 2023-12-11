@@ -77,12 +77,18 @@ def __str__(self):
     return self.userid
 
 class order(models.Model):
-    user=models.CharField(max_length=200)
-    totel=models.CharField(max_length=200)
-    pstatus=models.CharField(max_length=200)
-    adress=models.CharField(max_length=200)
-    Name=models.CharField(max_length=250)
-    Phoneno=models.CharField(max_length=250)
-    location=models.CharField(max_length=200,null=True,blank=True)
-    pincode=models.CharField(max_length=6,null=True,blank=True)
-   
+    cakeid = models.CharField(max_length=200)
+    userid = models.CharField(max_length=200)
+    quantity = models.CharField(max_length=200)
+    image = models.CharField(max_length=200)
+    order_status = models.CharField(max_length=200)
+    totalprice = models.CharField(max_length=200)
+    cakename = models.CharField(max_length=200)
+    cakeprice = models.CharField(max_length=200)  # Add this field
+    cakecategory = models.CharField(max_length=200)  # Add this field
+    username = models.CharField(max_length=200)  # Add this field
+    orderstatus = models.CharField(max_length=200)  # Add this field
+
+def __str__(self):
+    return self.userid    
+
