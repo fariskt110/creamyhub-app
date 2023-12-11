@@ -14,17 +14,17 @@ export default function Payment(){
     const amd = {grandtotal}
     const aas = amd.grandtotal
 
-    const user=localStorage.getItem("user_id");
-    console.log(user);
+    const userid=localStorage.getItem("user_id");
+    console.log(userid);
 
     useEffect(()=>{
-   axios.get(`http://127.0.0.1:8000/api/VieworderAPIView/${user}`).then((response=>{
+   axios.get(`http://127.0.0.1:8000/api/VieworderAPIView/${userid}`).then((response=>{
     setCart(response.data.data)
     console.log(response.data.data);
    }));
 },[]);
 useEffect(()=>{
-  axios.get(`http://127.0.0.1:8000/api/Get_Single_user/${user}`).then((response=>{
+  axios.get(`http://127.0.0.1:8000/api/Get_Single_user/${userid}`).then((response=>{
   setUser(response.data.data);
   console.log(response.data.data);
   }));

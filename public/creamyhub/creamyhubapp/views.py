@@ -451,50 +451,46 @@ class generateqr_api(GenericAPIView):
 
 class place_orderAPIView(GenericAPIView):
     serializer_class = order_serializer
-
     def post(self, request):
-        user_id = request.data.get('user')
-        print('Request Data:', request.data)
-        print('USERId', user_id)
-        
-        carts = cart.objects.filter(userid=user_id, cartstatus=0)
-        print('kooooooooooooooooooooooooooooooooooooooooooooooKKKKKKKKKK',carts,)
-        
-        if not carts.exists():
-            return Response({'message': 'No item in cart to place order', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        cart_items = cart.objects.filter(userid=request.user.id)
+        if not cart_items.exists():
+            return Response({'error': 'Your cart is empty.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        tot = carts.aggregate(TotalAmount=Sum('totalprice'))['TotalAmount']
-        TotalAmount = str(tot)
-        
-        order_data = []
-        for cart_item in carts:
-            order_data.append({
-              'user': user_id,
-              'cakeid': cart_item.cakeid,
-              'cakename': cart_item.cakename,
-              'quantity': cart_item.quantity,
-              'cakeprice': cart_item.cakeprice,
-              'image': cart_item.image,
-              'totalprice': cart_item.totalprice,
-              'order_status': "0",
-              'TotalAmount': tot,
-              'userid': cart_item.userid,  # Include the required fields
-              'cakecategory': cart_item.cakecategory,
-              'orderstatus': "0",
-              'username': cart_item.username
-            })
+        total_price = sum(item.totalprice for item in cart_items)
 
-            # Mark the cart item as processed
-            cart_item.cartstatus = "1"
-            cart_item.save()
+        # Prepare order data
+        order_data = {
+            'userid': request.user.id,
+            'order_status': 'pending',
+            'totalprice': total_price,
+        }
 
-        serializer = self.serializer_class(data=order_data, many=True)
-        
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data': serializer.data, 'message': 'Order placed successfully', 'success': True}, status=status.HTTP_201_CREATED)
-        
-        return Response({'data': serializer.errors, 'message': 'Failed', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        # Create order object
+        serializer = self.get_serializer(data=order_data)
+        serializer.is_valid(raise_exception=True)
+        order = serializer.save()
+
+        # Create order items for each cart item
+        for cart_item in cart_items:
+            order_item_data = {
+                'order': order,
+                'cakeid': cart_item.cakeid,
+                'cakename': cart_item.cakename,
+                'cakeprice': cart_item.cakeprice,
+                'cakecategory': cart_item.cakecategory,
+                'brand': cart_item.brand,
+                'image': cart_item.image,
+                'username': cart_item.username,
+                'quantity': cart_item.quantity,
+            }
+            order_item_serializer = order_serializer(data=order_item_data)
+            order_item_serializer.is_valid(raise_exception=True)
+            order_item_serializer.save()
+
+        # Clear cart
+        cart_items.delete()
+
+        return Response({'message': 'Order placed successfully.'}, status=status.HTTP_201_CREATED)
 class view_orderAPIView(GenericAPIView):
     serializer_class=order_serializer
 
@@ -506,8 +502,7 @@ class view_orderAPIView(GenericAPIView):
             return Response({'data':serializer.data,'message':"View order list",'sucess':True},status = status.HTTP_201_CREATED)
         else:
             return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
-class Delete_orderAPIView(GenericAPIView):
-    def delete(self,request,id):
+
         
 
 class GetpasswordAPIVIEW(GenericAPIView):

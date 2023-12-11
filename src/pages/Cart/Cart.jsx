@@ -97,19 +97,21 @@ export default function Cart() {
 
   console.log(user.Name);
 
-  const orderadd = () => {
+  const orderadd = (kotta) => {
     
     const order = {
-      user: userid,
+      userid: user,
       grandtotal: grandtotal,
       name: user.Name,
       phoneno: user.Phoneno,
       use: user.adress,
       Location: user.location,
       Pincode: user.pincode,
+      cakeid:kotta,
+      quantity:1,
       
       
-       cakeid: cart.length > 0 ? cart[0].cakeid : null
+      //  cakeid: cart.length > 0 ? cart[0].cakeid : null
     
     };
 
