@@ -449,48 +449,15 @@ class generateqr_api(GenericAPIView):
         Generateqr(grandtotal)
         return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
 
-class place_orderAPIView(GenericAPIView):
-    serializer_class = order_serializer
-    def post(self, request):
-        cart_items = cart.objects.filter(userid=request.user.id)
-        if not cart_items.exists():
-            return Response({'error': 'Your cart is empty.'}, status=status.HTTP_400_BAD_REQUEST)
+class place_orderAPIViewAPIView(GenericAPIView):
+    def post(self,request):
+        serializer=order_serializer
+        user_id=request.data.get("userid")
+        
 
-        total_price = sum(item.totalprice for item in cart_items)
 
-        # Prepare order data
-        order_data = {
-            'userid': request.user.id,
-            'order_status': 'pending',
-            'totalprice': total_price,
-        }
 
-        # Create order object
-        serializer = self.get_serializer(data=order_data)
-        serializer.is_valid(raise_exception=True)
-        order = serializer.save()
 
-        # Create order items for each cart item
-        for cart_item in cart_items:
-            order_item_data = {
-                'order': order,
-                'cakeid': cart_item.cakeid,
-                'cakename': cart_item.cakename,
-                'cakeprice': cart_item.cakeprice,
-                'cakecategory': cart_item.cakecategory,
-                'brand': cart_item.brand,
-                'image': cart_item.image,
-                'username': cart_item.username,
-                'quantity': cart_item.quantity,
-            }
-            order_item_serializer = order_serializer(data=order_item_data)
-            order_item_serializer.is_valid(raise_exception=True)
-            order_item_serializer.save()
-
-        # Clear cart
-        cart_items.delete()
-
-        return Response({'message': 'Order placed successfully.'}, status=status.HTTP_201_CREATED)
 class view_orderAPIView(GenericAPIView):
     serializer_class=order_serializer
 
@@ -556,4 +523,6 @@ class UserSearchAPIView(GenericAPIView):
 
         return Response({"data": serializer.data, "message": "Search successful", "success": True}, status=status.HTTP_200_OK)        
 
-        
+    
+
+

@@ -33,11 +33,11 @@ urlpatterns = [
     path('generateqr_api',views.generateqr_api.as_view(),name='generateqr_api'),
     path('Add_cartviewAPIView',views.Add_cartviewAPIView.as_view(),name='Add_cartviewAPIView'),
     # path('Delete_orderAPIView/<int:id>',views.Delete_orderAPIView.as_view(),name='Delete_orderAPIView'),
-    path('place_orderAPIView',views.place_orderAPIView.as_view(),name='place_orderAPIView'),
+     path('place_orderAPIView',views.place_orderAPIView.as_view(),name='place_orderAPIView'),
     path('view_orderAPIView/<int:id>',views.view_orderAPIView.as_view(),name='view_orderAPIView'),
     path('GetpasswordAPIVIEW',views.GetpasswordAPIVIEW.as_view(),name="GetpasswordAPIVIEW"),
     path('otpverificationAPIView',views.otpverificationAPIView.as_view(),name='otpverificationAPIView'),
     path("UserSearchAPIView",views.UserSearchAPIView.as_view(), name="UserSearchAPIView"),
-    path("Update_passwordAPIView",views.Update_passwordAPIView.as_view(),name="Update_passwordAPIView")
+    path("Update_passwordAPIView",views.Update_passwordAPIView.as_view(),name="Update_passwordAPIView"),
 
 ]
