@@ -449,10 +449,16 @@ class generateqr_api(GenericAPIView):
         Generateqr(grandtotal)
         return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
 
-class place_orderAPIViewAPIView(GenericAPIView):
+class place_orderAPIView(GenericAPIView):
     def post(self,request):
         serializer=order_serializer
         user_id=request.data.get("userid")
+        print("2871638i2546i2tekug",user_id)
+        carts=cart.objects.filter(userid=user_id,cartstatus=0)
+        print("kjdkhsk",carts)
+        
+        return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
+
         
 
 
