@@ -100,15 +100,14 @@ export default function Cart() {
   const orderadd = (kotta) => {
     
     const order = {
-      userid: user,
+      userid: userid,
       grandtotal: grandtotal,
       name: user.Name,
       phoneno: user.Phoneno,
       use: user.adress,
       Location: user.location,
       Pincode: user.pincode,
-      cakeid:kotta,
-      quantity:1,
+      
       
       
       
@@ -117,7 +116,7 @@ export default function Cart() {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/place_orderAPIView", order)
+      .post("http://127.0.0.1:8000/api/placeorderAPIView", order)
       .then((response) => {
         console.log(response);
         Navigate("/payment");

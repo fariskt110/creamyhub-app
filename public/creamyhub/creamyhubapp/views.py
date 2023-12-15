@@ -449,19 +449,36 @@ class generateqr_api(GenericAPIView):
         Generateqr(grandtotal)
         return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
 
-class place_orderAPIView(GenericAPIView):
+class placeorderAPIView(GenericAPIView):
+    serializer_class=cartserializer
+
+
     def post(self,request):
-        serializer=order_serializer
-        user_id=request.data.get("userid")
-        print("2871638i2546i2tekug",user_id)
-        carts=cart.objects.filter(userid=user_id,cartstatus=0)
-        print("kjdkhsk",carts)
         
-        return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
-
+        user1 = request.data.get('userid')
+        name=[]
+        price=[]
+        cakeid=[]
+        image=[]
         
+        queryset=cart.objects.filter(userid=user1).values()
+        # print(queryset)
+        for i in queryset:
+          name.append(i['cakename'])
+          price.append(i['totalprice'])
+          cakeid.append(i['cakeid'])
+          image.append(i['image'])
+        print(price)  
 
+            
+            
+   
 
+        if(queryset.count()>0) :
+            serializer=cartserializer(queryset,many=True)
+            return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
+        else:
+            return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
 
 
 class view_orderAPIView(GenericAPIView):
@@ -530,5 +547,18 @@ class UserSearchAPIView(GenericAPIView):
         return Response({"data": serializer.data, "message": "Search successful", "success": True}, status=status.HTTP_200_OK)        
 
     
+
+class orderAPIView(GenericAPIView):
+    serializer_class=cartserializer
+
+    def get(self,request,id):
+        queryset=cart.objects.filter(userid=id).values()
+        # print(queryset)
+        if(queryset.count()>0) :
+            serializer=cartserializer(queryset,many=True)
+            return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
+        else:
+            return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)          
+
 
 
