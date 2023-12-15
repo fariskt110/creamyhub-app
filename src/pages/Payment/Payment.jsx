@@ -18,7 +18,7 @@ export default function Payment(){
     console.log(userid);
 
     useEffect(()=>{
-   axios.get(`http://127.0.0.1:8000/api/VieworderAPIView/${userid}`).then((response=>{
+   axios.get(`http://127.0.0.1:8000/api/view_orderAPIView/${userid}`).then((response=>{
     setCart(response.data.data)
     console.log(response.data.data);
    }));
@@ -69,7 +69,7 @@ console.log(cart);
       <td>{data.cakename}</td>
       
       
-      <td>{`/creamyhub/static/${data.image}`}</td>
+      <td><img height={50} width={50} src={`/creamyhub/media/${data.image}`}></img></td>
     </tr>
     {/* <!-- Add more rows for other products if needed --> */}
   </tbody>

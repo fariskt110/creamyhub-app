@@ -97,7 +97,7 @@ export default function Cart() {
 
   console.log(user.Name);
 
-  const orderadd = (kotta) => {
+  const orderadd = () => {
     
     const order = {
       userid: userid,
@@ -116,7 +116,7 @@ export default function Cart() {
     };
 
     axios
-      .post("http://127.0.0.1:8000/api/placeorderAPIView", order)
+      .post("http://127.0.0.1:8000/api/PlaceOrderAPIView", order)
       .then((response) => {
         console.log(response);
         Navigate("/payment");

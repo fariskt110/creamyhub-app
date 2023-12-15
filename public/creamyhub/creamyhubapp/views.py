@@ -449,37 +449,94 @@ class generateqr_api(GenericAPIView):
         Generateqr(grandtotal)
         return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
 
-class placeorderAPIView(GenericAPIView):
-    serializer_class=cartserializer
+# class placeorderAPIView(GenericAPIView):
+#     serializer_class=order_serializer
 
 
-    def post(self,request):
+#     def post(self,request):
         
-        user1 = request.data.get('userid')
-        name=[]
-        price=[]
-        cakeid=[]
-        image=[]
+#         user1 = request.data.get('userid')
         
-        queryset=cart.objects.filter(userid=user1).values()
-        # print(queryset)
-        for i in queryset:
-          name.append(i['cakename'])
-          price.append(i['totalprice'])
-          cakeid.append(i['cakeid'])
-          image.append(i['image'])
-        print(price)  
+#         queryset=cart.objects.filter(userid=user1).values()
+#         print(queryset)
+#         # print(queryset)
+#         for i in queryset:
+#           cakename=i['cakename']
+#         # print(price)
+#         # print(cakeid)
+#         # print(image) 
+#         tot= queryset.aggregate(total=Sum('totalprice'))['total']
+#         total=str(tot) 
+#         print("===total",total)
+#         order_data=[]
+#         for i in queryset:
+#             print(i)    
+#             order_data.append({
+#             'userid': user1,
+#             "cakename":i['cakename']
+           
 
+                
+#             })
+#             print("orderdata===",order_data)
             
             
    
+#             serializer=self.serializer_class(data=order_data,many=True)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
+#             return Response({'data':serializer.errors,'message':'Failed','sucess':False},status=status.HTTP_400_BAD_REQUEST)    
 
-        if(queryset.count()>0) :
-            serializer=cartserializer(queryset,many=True)
-            return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
+#         # if(queryset.count()>0) :
+#         #     serializer=cartserializer(queryset,many=True)
+#         #     return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
+#         # else:
+#         #     return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
+
+
+class PlaceOrderAPIView(GenericAPIView):
+    serializer_class = order_serializer
+
+    def post(self, request):
+        user1 = request.data.get('userid')
+        # name = []
+
+        queryset = cart.objects.filter(userid=user1).values()
+        print(queryset)
+
+        tot = queryset.aggregate(total=Sum('totalprice'))['total']
+        total = str(tot)
+        print("===total", total)
+
+        order_data = []
+        for item in queryset:
+            print(item)
+            order_data.append({
+                'userid': user1,
+                'cakename': item['cakename'],
+                'cakeid':item['cakeid'],
+                'image':item['image'],
+                'totalprice':item['totalprice'],
+                'orderstatus':"0",
+                "order_status":"0",
+                'cakecategory':item['cakecategory'],
+                'quantity':item['quantity'],
+                'username':item['username'],
+                'cakeprice':item['cakeprice']
+
+
+            })
+            print("orderdata===", order_data)
+
+        serializer = self.serializer_class(data=order_data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data': serializer.data, 'message': "View cartlist", 'success': True},
+                            status=status.HTTP_201_CREATED)
         else:
-            return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
-
+            return Response({'data': serializer.errors, 'message': 'Failed', 'success': False},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 class view_orderAPIView(GenericAPIView):
     serializer_class=order_serializer
@@ -548,17 +605,7 @@ class UserSearchAPIView(GenericAPIView):
 
     
 
-class orderAPIView(GenericAPIView):
-    serializer_class=cartserializer
 
-    def get(self,request,id):
-        queryset=cart.objects.filter(userid=id).values()
-        # print(queryset)
-        if(queryset.count()>0) :
-            serializer=cartserializer(queryset,many=True)
-            return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
-        else:
-            return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)          
 
 
 
