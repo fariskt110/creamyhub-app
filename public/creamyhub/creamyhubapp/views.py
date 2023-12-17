@@ -1,7 +1,7 @@
 from django.db.models import Sum
 from django.shortcuts import render
-from.serializers import Loginserializer,Registrationserializer,caketableserializer,Bookingserializer,Reviewserializer,Wishlistserializer,cartserializer,order_serializer
-from.models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order
+from.serializers import Loginserializer,Registrationserializer,caketableserializer,Bookingserializer,Reviewserializer,Wishlistserializer,cartserializer,order_serializer,payment_serializer
+from.models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order,payment
 from.mail import sendmail
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,6 +9,10 @@ from rest_framework.generics import GenericAPIView
 from .qr import Generateqr
 import random
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
+from rest_framework.generics import DestroyAPIView
+from .date import sendtime
+
 
 global otp,emailid
 
@@ -448,95 +452,50 @@ class generateqr_api(GenericAPIView):
         print(grandtotal)
         Generateqr(grandtotal)
         return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
-
-# class placeorderAPIView(GenericAPIView):
-#     serializer_class=order_serializer
-
-
-#     def post(self,request):
-        
-#         user1 = request.data.get('userid')
-        
-#         queryset=cart.objects.filter(userid=user1).values()
-#         print(queryset)
-#         # print(queryset)
-#         for i in queryset:
-#           cakename=i['cakename']
-#         # print(price)
-#         # print(cakeid)
-#         # print(image) 
-#         tot= queryset.aggregate(total=Sum('totalprice'))['total']
-#         total=str(tot) 
-#         print("===total",total)
-#         order_data=[]
-#         for i in queryset:
-#             print(i)    
-#             order_data.append({
-#             'userid': user1,
-#             "cakename":i['cakename']
-           
-
-                
-#             })
-#             print("orderdata===",order_data)
-            
-            
-   
-#             serializer=self.serializer_class(data=order_data,many=True)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
-#             return Response({'data':serializer.errors,'message':'Failed','sucess':False},status=status.HTTP_400_BAD_REQUEST)    
-
-#         # if(queryset.count()>0) :
-#         #     serializer=cartserializer(queryset,many=True)
-#         #     return Response({'data':serializer.data,'message':"View cartlist",'sucess':True},status = status.HTTP_201_CREATED)
-#         # else:
-#         #     return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
-
-
 class PlaceOrderAPIView(GenericAPIView):
     serializer_class = order_serializer
 
     def post(self, request):
         user1 = request.data.get('userid')
-        # name = []
 
-        queryset = cart.objects.filter(userid=user1).values()
-        print(queryset)
+        with transaction.atomic():
+            # Fetch cart items
+            queryset = cart.objects.filter(userid=user1).values()
 
-        tot = queryset.aggregate(total=Sum('totalprice'))['total']
-        total = str(tot)
-        print("===total", total)
+            # Calculate total
+            tot = queryset.aggregate(total=Sum('totalprice'))['total']
+            total = str(tot)
+            print("===total", total)
 
-        order_data = []
-        for item in queryset:
-            print(item)
-            order_data.append({
-                'userid': user1,
-                'cakename': item['cakename'],
-                'cakeid':item['cakeid'],
-                'image':item['image'],
-                'totalprice':item['totalprice'],
-                'orderstatus':"0",
-                "order_status":"0",
-                'cakecategory':item['cakecategory'],
-                'quantity':item['quantity'],
-                'username':item['username'],
-                'cakeprice':item['cakeprice']
+            order_data = []
+            for item in queryset:
+                order_data.append({
+                    'userid': user1,
+                    'cakename': item['cakename'],
+                    'cakeid': item['cakeid'],
+                    'image': item['image'],
+                    'totalprice': item['totalprice'],
+                    'orderstatus': "0",
+                    "order_status": "0",
+                    'cakecategory': item['cakecategory'],
+                    'quantity': item['quantity'],
+                    'username': item['username'],
+                    'cakeprice': item['cakeprice']
+                })
 
+            # Save order
+            serializer = self.serializer_class(data=order_data, many=True)
+            if serializer.is_valid():
+                serializer.save()
 
-            })
-            print("orderdata===", order_data)
+                # Delete items from cart after placing the order
+                cart.objects.filter(userid=user1).delete()
 
-        serializer = self.serializer_class(data=order_data, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data': serializer.data, 'message': "View cartlist", 'success': True},
-                            status=status.HTTP_201_CREATED)
-        else:
-            return Response({'data': serializer.errors, 'message': 'Failed', 'success': False},
-                            status=status.HTTP_400_BAD_REQUEST)
+                return Response({'data': serializer.data, 'message': "Order placed successfully", 'success': True},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({'data': serializer.errors, 'message': 'Failed to place order', 'success': False},
+                                status=status.HTTP_400_BAD_REQUEST)
 
 class view_orderAPIView(GenericAPIView):
     serializer_class=order_serializer
@@ -550,7 +509,17 @@ class view_orderAPIView(GenericAPIView):
         else:
             return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
 
+class DeleteOrderAPIView(GenericAPIView):
+    def delete(self,request,id):
+
+        delproduct= order.objects.filter(userid=id)
+        for i in delproduct:
+           i.delete()
+
         
+        return Response({'message':'Deleted sucessfully','sucess':True}, status=status.HTTP_200_OK)
+    
+
 
 class GetpasswordAPIVIEW(GenericAPIView):
     def post(self, request):
@@ -574,6 +543,7 @@ class otpverificationAPIView(GenericAPIView):
         if(votp==otp):
             print("otp verified")
         else:("otp not verified")
+
         
 
         
@@ -601,10 +571,44 @@ class UserSearchAPIView(GenericAPIView):
       
         serializer = caketableserializer(results, many=True)
 
-        return Response({"data": serializer.data, "message": "Search successful", "success": True}, status=status.HTTP_200_OK)        
+        return Response({"data": serializer.data, "message": "Search successful", "success": True}, status=status.HTTP_200_OK)
+class paymentAPIView(GenericAPIView):
+    serializer_class=payment_serializer
+    def post(self,request):
+        userid=request.data.get("userid")
+        grandtotal=request.data.get('grandtotal')
+        paymentcompleted="your payment completed"
+        orderstatus="1" 
+        id=(random.randint(1111, 2222))
+        ID=(random.randint(3333,4444))
+        Total=(id+ID)
+        date=sendate(note,"hjhg")
+        print(date)          
+
 
     
+# from datetime import datetime
+# import pytz
+# import random
+# local_timezone = pytz.timezone('Asia/Kolkata')  # Replace 'Asia/Kolkata' with your desired timezone
+# current_datetime = datetime.now(local_timezone)
+    
+#     # Format the local date and time as a string
+# date_time_str = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    
+#     # Include date and time in the note
+# note = f'Company - {date_time_str}'
+# print(note)
+# id=(random.randint(1111, 2222))
+# ID=(random.randint(3333,4444))
+# Total=id+ID
+# print(Total)
+# userid=6;
+# grandtotal="#"+str(54545);
 
+# paymentcompleted="thanks"
+# print(grandtotal)
+# print(userid)
 
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order
+from . models import Login,Registration,caketable,Booking,Review,Wishlist,cart,order,payment
 
 
 class Loginserializer(serializers.ModelSerializer):
@@ -51,5 +51,12 @@ class order_serializer(serializers.ModelSerializer):
         model=order
         fields='__all__'
     def create(self,validated_data):
-        return order.objects.create(**validated_data)                                     
+        return order.objects.create(**validated_data)
+class payment_serializer(serializers.ModelSerializer):
+    class Meta:
+        model=payment
+        fields='__all__'
+    def create(self,validated_data):
+        return order.objects.create(**validated_data)        
+
                                
