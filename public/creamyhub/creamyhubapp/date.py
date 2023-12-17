@@ -1,6 +1,6 @@
 from datetime import datetime
 import pytz
-def sendtime():
+def senddate():
     local_timezone = pytz.timezone('Asia/kolkata')  # Replace 'Asia/Kolkata' with your desired timezone
     current_datetime = datetime.now(local_timezone)
     

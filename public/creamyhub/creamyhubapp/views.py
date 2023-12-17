@@ -11,7 +11,7 @@ import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from rest_framework.generics import DestroyAPIView
-from .date import sendtime
+from .date import senddate
 
 
 global otp,emailid
@@ -582,8 +582,8 @@ class paymentAPIView(GenericAPIView):
         id=(random.randint(1111, 2222))
         ID=(random.randint(3333,4444))
         Total=(id+ID)
-        date=sendate(note,"hjhg")
-        print(date)          
+        
+
 
 
     
