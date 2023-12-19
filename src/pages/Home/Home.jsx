@@ -31,8 +31,8 @@ export default function Home() {
     dispatch(getProducts());
 
   }, [dispatch]);
-  const basket = (wid,e) => {
-    e.preventDefault();
+  const basket = (wid) => {
+  
     const data = {
       user_id: user,
       cakeid: wid,
@@ -42,17 +42,17 @@ export default function Home() {
       .then((response) => {
         console.log(response.data.message);
         toast.success("product added to wishlist sucessfully.");
-        setTimeout(() => {
-          Navigate("/")
-        }, 2000);
+        // setTimeout(() => {
+        //   Navigate("/")
+        // }, 2000);
       })
       .catch((error) => {
         console.log(error);
       });
   };
  
-  const cart = (kotta, e) => {
-    e.preventDefault();
+  const cart = (kotta) => {
+
     const data = {
       userid: user,
       cakeid: kotta,
@@ -65,11 +65,11 @@ export default function Home() {
       .post("http://127.0.0.1:8000/api/Add_cartviewAPIView", data)
       .then((response) => {
         console.log(response.data.data);
-        toast.success("product added to cart sucessfully")
-        setTimeout(() => {
-          Navigate('/')
+        // toast.success("product added to cart sucessfully")
+        // setTimeout(() => {
+        //   // Navigate('/')
           
-        }, 2000);
+        // }, 2000);
       }).catch((error)=>{
         console.log(error);
       });
@@ -145,8 +145,8 @@ export default function Home() {
               <p>{data.brand}</p>
               <button
                 className="addd-to-cart"
-                onClick={(e) => {
-                  cart(data.id,e);
+                onClick={() => {
+                  cart(data.id);
                 }}
               >
                 <FaShoppingCart />
