@@ -37,8 +37,8 @@ urlpatterns = [
     path('view_orderAPIView/<int:id>',views.view_orderAPIView.as_view(),name='view_orderAPIView'),
     path('GetpasswordAPIVIEW',views.GetpasswordAPIVIEW.as_view(),name="GetpasswordAPIVIEW"),
     path('otpverificationAPIView',views.otpverificationAPIView.as_view(),name='otpverificationAPIView'),
-    path("UserSearchAPIView",views.UserSearchAPIView.as_view(), name="UserSearchAPIView"),
-    path("Update_passwordAPIView",views.Update_passwordAPIView.as_view(),name="Update_passwordAPIView"),
-    path("paymentAPIView",views.paymentAPIView.as_view(),name="paymentAPIView")
-    
+    path('UserSearchAPIView',views.UserSearchAPIView.as_view(), name="UserSearchAPIView"),
+    path('Update_passwordAPIView',views.Update_passwordAPIView.as_view(),name="Update_passwordAPIView"),
+    path("paymentAPIView",views.paymentAPIView.as_view(),name="paymentAPIView"),
+    path('view_paymentAPIView/<int:id>',views.view_paymentAPIView.as_view(),name='view_paymentAPIView')
 ]

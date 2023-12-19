@@ -32,7 +32,7 @@ export default function Finalpayment(){
       <span>GPay/PhonePay</span>
     </button></Link>
 
-   <Link to={'/cod'}> <button className="payment-option">
+   <Link to={`/cod/${grandtotal}`}> <button className="payment-option">
       <img src="/creamyhub/static/images/cod.png" alt="COD" />
       <span>COD</span>
     </button></Link>

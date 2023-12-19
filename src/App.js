@@ -60,7 +60,7 @@ function App() {
   <Route path='/singleview/:id' element={<Usersingleview/>}></Route>
   <Route path='/finalpayment/:grandtotal' element={<Finalpayment/>}></Route>
   <Route path='/gpay' element={<Gpay/>}></Route>
-  <Route path='/cod' element={<Cod/>}></Route>
+  <Route path='/cod/:grandtotal' element={<Cod/>}></Route>
   <Route path='/card' element={<Creditcard/>}></Route>
   <Route path='/paymentwish' element={<Paymentsucessful/>}></Route>
   <Route path='fresh'element={<Freshcreamcakes/>}></Route>

@@ -577,15 +577,27 @@ class paymentAPIView(GenericAPIView):
     def post(self,request):
         userid=request.data.get("userid")
         grandtotal=request.data.get('grandtotal')
-        paymentcompleted="your payment completed"
+        paymentcompleted="yourpaymentcompleted"
         orderstatus="1" 
         id=(random.randint(1111, 2222))
         ID=(random.randint(3333,4444))
         Total=(id+ID)
-        
+        print(Total,"dwhdiywhd")
+        datetime_note = senddate()
 
+        print(datetime_note,"xucuybcuyabcy")
+        return Response({'message': 'payment   successfull', 'success': 1}, status=status.HTTP_200_OK)
+class view_paymentAPIView(GenericAPIView):
+    serializer_class=payment_serializer
 
-
+    def get(self,request,id):
+        queryset=payment.objects.filter(userid=id).values()
+        print(queryset)
+        if(queryset.count()>0) :
+            serializer=order_serializer(queryset,many=True)
+            return Response({'data':serializer.data,'message':"View order list",'sucess':True},status = status.HTTP_201_CREATED)
+        else:
+            return Response({'data':'non data available','sucess':False}, status =status.HTTP_201_CREATED)
     
 # from datetime import datetime
 # import pytz

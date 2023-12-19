@@ -96,8 +96,8 @@ class payment(models.Model):
     orderstatus=models.CharField(max_length=200)
     grandtotal=models.CharField(max_length=200)
     paymentcompleted=models.CharField(max_length=200)
-    datetime = models.CharField(max_length=200)
-
+    datetime_note = models.CharField(max_length=200)
+    userid=models.CharField(max_length=200)
         
     def __str__(self):
         return self.paymentcompleted           
