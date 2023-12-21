@@ -8,7 +8,10 @@ import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { getProducts } from "../../Redux/Reducer/Productslice";
-import toast,{Toaster} from "react-hot-toast";
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   // const [cakelist, setCakeList] = useState([]);
@@ -21,6 +24,7 @@ export default function Home() {
  
 
 
+
  const dispatch=useDispatch()
 
   useEffect(() => {
@@ -28,6 +32,7 @@ export default function Home() {
     //   setCakeList(response.data.data);
     //   console.log(response.data.data);
     // });
+  // },[]);
     dispatch(getProducts());
 
   }, [dispatch]);
@@ -41,7 +46,16 @@ export default function Home() {
       .post("http://127.0.0.1:8000/api/add_wishlist_api", data)
       .then((response) => {
         console.log(response.data.message);
-        toast.success("product added to wishlist sucessfully.");
+        toast.success('product added sucessfully', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
         // setTimeout(() => {
         //   Navigate("/")
         // }, 2000);
@@ -51,29 +65,37 @@ export default function Home() {
       });
   };
  
-  const cart = (kotta) => {
-
+  const cart = (kotta, e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+  
     const data = {
       userid: user,
       cakeid: kotta,
-      quantity:1
-      
+      quantity: 1,
     };
-   
-
+  
     axios
       .post("http://127.0.0.1:8000/api/Add_cartviewAPIView", data)
       .then((response) => {
         console.log(response.data.data);
-        // toast.success("product added to cart sucessfully")
-        // setTimeout(() => {
-        //   // Navigate('/')
-          
-        // }, 2000);
-      }).catch((error)=>{
+        toast.success('product added sucessfully', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored"})
+         setTimeout(() => {
+        //   Navigate('/')
+        }, 5000);
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
+  
   const handleImageError = (e) => {
     e.target.src = '/creamyhub/static/images/cake2.jpeg'; // Replace with the path to your placeholder image
   };
@@ -86,7 +108,7 @@ export default function Home() {
   return (
   
     <>
-    <div><Toaster/></div>
+    <div></div>
       <div class="carousel">
         <div class="carousel-slide">
           <img  src={"/creamyhub/static/images/caro1.jpg"} alt="Image 1" />
@@ -134,6 +156,7 @@ export default function Home() {
           </li>
         </ul>
       </nav>
+      <ToastContainer/>
       {cakelist.map((data) => (
         <section className="producct-section">
           <div className="producct-card">
@@ -145,8 +168,8 @@ export default function Home() {
               <p>{data.brand}</p>
               <button
                 className="addd-to-cart"
-                onClick={() => {
-                  cart(data.id);
+                onClick={(e) => {
+                  cart(data.id,e);
                 }}
               >
                 <FaShoppingCart />
